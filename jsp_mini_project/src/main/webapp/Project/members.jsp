@@ -165,8 +165,10 @@
 			            trainerRs.close(); // 리소스 닫기
 			        %>
 			    </select>
+			     <input type="hidden" id="trainerId" name="trainerId" value="">
 			</div>
 					<button id="registerBtn" onclick="registerMember()">등록</button>
+					
 			
         </div>
 
@@ -219,45 +221,35 @@
     </div>
 
     <script>
-    /*  function registerMember() {
-           
-            alert('회원이 등록되었습니다.');
-      } */
-     
-     function registerMember() {
-         // 회원 정보 입력값 가져오기
-         var memberName = document.getElementById("memberName").value;
-         var birthYear = document.getElementById("birthYear").value;
-         var birthMonth = document.getElementById("birthMonth").value;
-         var birthDay = document.getElementById("birthDay").value;
-         var gender = document.getElementById("gender").value;
-         var phoneNumber = document.getElementById("phoneNumber").value;
-         var membershipPeriod = document.getElementById("membershipPeriod").value;
-         var ptTicket = document.getElementById("ptTicket").value;
-         var trainer = document.getElementById("trainer").value;
+    	 function registerMember() {
+    		 var memberName = document.getElementById("memberName").value;
+    	        var birthYear = document.getElementById("birthYear").value;
+    	        var birthMonth = document.getElementById("birthMonth").value;
+    	        var birthDay = document.getElementById("birthDay").value;
+    	        var gender = document.getElementById("gender").value;
+    	        var phoneNumber = document.getElementById("phoneNumber").value;
+    	        var membershipPeriod = document.getElementById("membershipPeriod").value;
+    	        var ptTicket = document.getElementById("ptTicket").value;
+    	        var trainerId = document.getElementById("trainer").value;
 
-         // 여기서 서버로 데이터를 전송하고, 성공 시 아래의 코드를 실행할 수 있습니다.
+    	        // 날짜 형식 조합
+    	        var birthDate = birthYear + "-" + birthMonth + "-" + birthDay;
+        		var purchaseDate = new Date().toISOString().split('T')[0]; // 현재 날짜를 yyyy-MM-dd 형식으로 가져옴
 
-         // 새로운 행을 생성하여 테이블에 추가
-         var table = document.querySelector("table");
-         var newRow = table.insertRow(-1); // 맨 끝에 추가
+    	        // URL에 전달할 링크 생성
+    	        var url = "members_save.jsp?" +
+    	            "name=" + encodeURIComponent(memberName) +
+    	            "&birthDate=" + encodeURIComponent(birthDate) +
+    	            "&gender=" + encodeURIComponent(gender) +
+    	            "&phone=" + encodeURIComponent(phoneNumber) +
+    	            "&membershipPeriod=" + encodeURIComponent(membershipPeriod) +
+    	            "&ptTicket=" + encodeURIComponent(ptTicket) +
+    	            "&trainerId=" + encodeURIComponent(trainerId);
 
-         // 각 열에 데이터 추가
-         var cells = [];
-         for (var i = 0; i < 10; i++) {
-             cells[i] = newRow.insertCell(i);
-         }
-
-         cells[0].innerHTML = memberName;
-         // 생년월일을 합쳐서 표시 (예시)
-         cells[1].innerHTML = birthYear + "-" + birthMonth + "-" + birthDay;
-         cells[2].innerHTML = gender;
-         cells[3].innerHTML = phoneNumber;
-         // 나머지 열도 데이터 추가 (membershipPeriod, ptTicket, trainer)
-
-         alert('회원이 등록되었습니다.');
-     }
-      asdas
+    	        // URL로 이동
+    	        location.href = url;
+    	}  
+    	
     </script>
 
 </body>

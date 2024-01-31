@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +139,7 @@
     </style>
 </head>
 <body>
-
+	
     <div class="container">
         <h1>멀티플렉스짐</h1>
         <label id="registerNumberLabel">회원등록번호 4자리 입력해주세요</label>
@@ -200,8 +203,12 @@
             var adminPopup = document.getElementById('adminPopup');
             adminPopup.style.display = 'none';
         }
+        
+        function adminLogin() {
+        	location.href="admin_login.jsp";
+        }
 
-        // 관리자 로그인 함수
+      /*   // 관리자 로그인 함수
         function adminLogin() {
             var adminId = document.getElementById('adminId').value;
             var adminPassword = document.getElementById('adminPassword').value;
@@ -214,7 +221,7 @@
             } else {
                 alert('아이디 또는 비밀번호가 올바르지 않습니다.');
             }
-        }
+        } */
 
         // 입장 버튼을 누를 때 호출되는 함수
         function enter() {
