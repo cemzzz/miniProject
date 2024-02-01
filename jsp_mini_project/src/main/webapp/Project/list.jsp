@@ -27,7 +27,7 @@
         }
 
         /* 중앙 컨테이너 스타일 */
-                .main-container {
+       .main-container {
             flex: 1;
             display: flex;
             padding: 20px;
@@ -91,10 +91,44 @@
             cursor: pointer;
             border: none;
         }
+        
+        .admin-info {
+	        margin-top: 20px;
+	        padding-top: 10px;
+	        border-top: 1px solid #ccc; /* 구분선 */
+	    }
+	
+	    .admin-id {
+	        font-size: 16px;
+	        color: #ccc;
+	        margin-bottom: 10px;
+	    }
+	
+	    .logout-form {
+	        text-align: center;
+	    }
+	
+	    .logout-button {
+	        padding: 10px 20px;
+	        background-color: #5C6BC0;
+	        color: white;
+	        border: none;
+	        border-radius: 4px;
+	        cursor: pointer;
+	        font-size: 16px;
+	    }
+	
+	    .logout-button:hover {
+	        background-color: #45a049; /* 버튼 호버 효과 */
+	    }
+        
     </style>
 </head>
 <body>
     <%@ include file="dbconn.jsp"%>
+    <%
+    	String adminId = (String)session.getAttribute("admin_id");
+	%>
 
     <!-- 좌측 메뉴 컨테이너 -->
     <div class="menu-container">
@@ -102,6 +136,15 @@
         <div class="menu-item" onclick="showMenu('trainers')">트레이너</div>
         <div class="menu-item" onclick="showMenu('reservation')">PT 예약 현황</div>
         <div class="menu-item" onclick="showMenu('sales')">매출</div>
+        
+        <% if(adminId != null) { %>
+        <div class="admin-info">
+            <p class="admin-id"><%= adminId %>님 로그인</p>
+            <form action="logout.jsp" method="POST" class="logout-form">
+                <button type="submit" class="logout-button">로그아웃</button>
+            </form>
+        </div>
+    	<% } %>
     </div>
 
      <!-- 중앙 컨테이너 -->

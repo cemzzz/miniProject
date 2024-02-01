@@ -13,13 +13,18 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f4f4f4;
+	        margin: 0;
+	        padding: 0;
+	        display: flex;
+	        align-items: center;
+	        justify-content: center;
+	        height: 100vh;
+	        background-color: #f4f4f4;
+	        background-image: url('roni.jpg'); /* 배경 이미지 URL 추가 */
+	        background-size: contain; /* 이미지가 너무 크지 않게 조정 */
+		    background-repeat: no-repeat;
+		    background-position: center; /* 이미지를 중앙에 배치 */
+
         }
 
         .container {
@@ -169,11 +174,11 @@
             <button class="close-button" onclick="closeAdminPanel()">✖</button>
             <h2>관리자 로그인</h2>
             <!-- 추가된 로그인 폼 -->
-            <form class="login-form">
-                <input type="text" placeholder="아이디" class="login-input" id="adminId">
-                <input type="password" placeholder="비밀번호" class="login-input" id="adminPassword">
-                <button type="button" class="login-button" onclick="adminLogin()">로그인</button>
-            </form>
+            <form class="login-form" action="admin_login.jsp" method="POST">
+			    <input type="text" placeholder="아이디" class="login-input" name="adminId">
+			    <input type="password" placeholder="비밀번호" class="login-input" name="adminPassword">
+			    <button type="submit" class="login-button">로그인</button>
+			</form>
         </div>
     </div>
 
@@ -204,26 +209,7 @@
             adminPopup.style.display = 'none';
         }
         
-        function adminLogin() {
-        	location.href="admin_login.jsp";
-        }
 
-      /*   // 관리자 로그인 함수
-        function adminLogin() {
-            var adminId = document.getElementById('adminId').value;
-            var adminPassword = document.getElementById('adminPassword').value;
-
-            // 실제 로그인 로직을 여기에 추가하면 됩니다.
-            // 예제로 아이디가 "admin", 비밀번호가 "password"일 때만 성공하도록 설정
-            if (adminId === 'admin' && adminPassword === 'password') {
-                alert('관리자로 로그인되었습니다.');
-                closeAdminPanel(); // 로그인 성공시 팝업 닫기
-            } else {
-                alert('아이디 또는 비밀번호가 올바르지 않습니다.');
-            }
-        } */
-
-        // 입장 버튼을 누를 때 호출되는 함수
         function enter() {
             var registerNumberInput = document.getElementById('registerNumberInput');
             if (registerNumberInput.value.length === 4) {

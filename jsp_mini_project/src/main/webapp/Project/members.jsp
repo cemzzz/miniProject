@@ -4,38 +4,98 @@
 <head>
     <title>회원 관리 시스템</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
         .container {
             display: flex;
             justify-content: center;
             align-items: flex-start;
+            padding: 10px;
+        }
+
+        .form-container, .list-container {
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
         }
 
         .form-container {
-            width: 30%;
-            margin-right: 5%;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 25%;
         }
 
         .list-container {
-            width: 65%;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 75%;
         }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .birthdate-section label {
+		    display: block; /* 라벨을 블록 요소로 설정 */
+		    font-weight: bold;
+		    margin-bottom: 5px;
+		}
+
+		.birthdate-group {
+		    display: flex; /* 항목들을 가로로 나열 */
+		    justify-content: flex-start;
+		}
+
+		.birthdate-group select {
+		    flex-basis: 30%; /* 각 드롭다운의 기본 크기 설정 */
+		    margin-right: 22px; /* 드롭다운 간의 여백 */
+		    padding: 8px;
+		    border-radius: 4px;
+		    border: 1px solid #ccc;
+		}
+
+		.birthdate-group select:last-child {
+		    margin-right: 0; /* 마지막 드롭다운의 오른쪽 여백 제거 */
+		}
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #5C6BC0;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3F51B5;
         }
 
         table {
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
             box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
         }
@@ -58,75 +118,16 @@
         tr:hover {
             background-color: #ddd;
         }
-        .form-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
-        }
-
-        .form-container h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        .form-container form {
-            display: grid;
-            grid-gap: 20px;
-        }
-
-        .form-container label {
-            font-weight: bold;
-            color: #555;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="date"],
-        .form-container select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-        }
-
-        .form-container input[type="submit"] {
-            background-color: #5C6BC0;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .form-container input[type="submit"]:hover {
-            background-color: #3F51B5;
-        }
 
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
                 align-items: center;
             }
-        }
- 
-        .birthdate-group {
-            display: flex; /* 이를 통해 항목들을 가로로 나열합니다. */
-            align-items: center; /* 항목들을 세로 중앙에 배치합니다. */
-        }
 
-        .birthdate-group label,
-        .birthdate-group select {
-            margin-right: 10px; /* 라벨과 셀렉트 박스 사이의 간격을 설정합니다. */
-            /* font-size: 0.9rem; /* 폰트 사이즈를 줄여 드롭다운을 더 작게 만듭니다. */ */
-        }
-
-        .birthdate-group select {
-            width: auto; /* 드롭다운 너비를 내용에 맞게 자동 조정합니다. */
-            padding: 5px; /* 드롭다운 내부 패딩을 줄여 크기를 감소시킵니다. */
+            .form-container, .list-container {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -140,28 +141,26 @@
 	            <label for="name">이름:</label>
 	            <input type="text" id="name" name="name" required><br>
 	
-	            <div class="birthdate-group">
-		            <label for="birthYear">생년:</label>
-		            <select id="birthYear" name="birthYear" required>
-		                <% for (int i = 1900; i <= 2020; i++) { %>
-		                    <option value="<%= i %>"><%= i %></option>
-		                <% } %>
-		            </select>
-
-		            <label for="birthMonth">월:</label>
-		            <select id="birthMonth" name="birthMonth" required>
-		                <% for (int i = 1; i <= 12; i++) { %>
-		                    <option value="<%= i %>"><%= i %></option>
-		                <% } %>
-		            </select>
-
-		            <label for="birthDay">일:</label>
-		            <select id="birthDay" name="birthDay" required>
-		                <% for (int i = 1; i <= 31; i++) { %>
-		                    <option value="<%= i %>"><%= i %></option>
-		                <% } %>
-		            </select>
-	        	</div>
+	            <div class="birthdate-section">
+			    <label>생년월일:</label>
+			    <div class="birthdate-group">
+			        <select id="birthYear" name="birthYear" required>
+			            <% for (int i = 1920; i <= 2020; i++) { %>
+			                <option value="<%= i %>" <%= i == 1980 ? "selected" : "" %>><%= i %></option>
+			            <% } %>
+			        </select>
+			        <select id="birthMonth" name="birthMonth" required>
+			            <% for (int i = 1; i <= 12; i++) { %>
+			                <option value="<%= i %>"><%= i %></option>
+			            <% } %>
+			        </select>
+			        <select id="birthDay" name="birthDay" required>
+			            <% for (int i = 1; i <= 31; i++) { %>
+			                <option value="<%= i %>"><%= i %></option>
+			            <% } %>
+			        </select>
+			    </div>
+			</div>
         
 	            <label for="gender">성별:</label>
 	            <select id="gender" name="gender" required>
@@ -229,6 +228,14 @@
 	
 	    <div class="list-container">
 	        <h2>회원 리스트</h2>
+	        
+	    	<form action="members.jsp" method="get">
+			    <input type="text" name="searchName" placeholder="이름 검색">
+			    <input type="submit" value="검색">
+			</form>
+			
+			
+	    
 			<table border="1">
 			    <tr>
 			    	<th>번호</th>
@@ -245,7 +252,10 @@
 			    </tr>
 			    <%
 			    String sql = "SELECT m.MEMBER_ID, m.NAME, m.BIRTHDATE, m.GENDER, m.PHONE, m.PURCHASE_DATE, m.REMAINING_PLAN, m.REMAINING_PT, m.PAUSED, t.NAME AS TRAINER_NAME, m.EXPIRATION_DATE FROM MEMBERS m LEFT JOIN TRAINERS t ON m.TRAINER_ID = t.TRAINER_ID";
-			        ResultSet rs = stmt.executeQuery(sql);
+			    
+			    
+			    
+			    ResultSet rs = stmt.executeQuery(sql);
 			
 			        while (rs.next()) {
 			        	 String gender = rs.getString("GENDER");
