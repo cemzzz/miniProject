@@ -168,42 +168,7 @@
 	        background-color: #45a049;
 	    }
 	    
-	    /* 팝업 스타일  */
-	    .popup {
-	        display: none;
-	        position: fixed;
-	        z-index: 1;
-	        left: 0;
-	        top: 0;
-	        width: 100%;
-	        height: 100%;
-	        overflow: auto;
-	        background-color: rgb(0,0,0);
-	        background-color: rgba(0,0,0,0.4);
-	        padding-top: 60px;
-	    }
-	
-	    .popup-content {
-	        background-color: #fefefe;
-	        margin: 5% auto;
-	        padding: 20px;
-	        border: 1px solid #888;
-	        width: 40%;
-	    }
-	
-	    .close {
-	        color: #aaa;
-	        float: right;
-	        font-size: 28px;
-	        font-weight: bold;
-	    }
-	
-	    .close:hover,
-	    .close:focus {
-	        color: black;
-	        text-decoration: none;
-	        cursor: pointer;
-	    }
+	    
     </style>
 </head>
 <body>
@@ -219,24 +184,24 @@
 	
 	            <div class="birthdate-section">
 			    <label>생년월일:</label>
-			    <div class="birthdate-group">
-			        <select id="birthYear" name="birthYear" required>
-			            <% for (int i = 1920; i <= 2020; i++) { %>
-			                <option value="<%= i %>" <%= i == 1980 ? "selected" : "" %>><%= i %></option>
-			            <% } %>
-			        </select>
-			        <select id="birthMonth" name="birthMonth" required>
-			            <% for (int i = 1; i <= 12; i++) { %>
-			                <option value="<%= i %>"><%= i %></option>
-			            <% } %>
-			        </select>
-			        <select id="birthDay" name="birthDay" required>
-			            <% for (int i = 1; i <= 31; i++) { %>
-			                <option value="<%= i %>"><%= i %></option>
-			            <% } %>
-			        </select>
-			    </div>
-			</div>
+				    <div class="birthdate-group">
+				        <select id="birthYear" name="birthYear" required>
+				            <% for (int i = 1920; i <= 2020; i++) { %>
+				                <option value="<%= i %>" <%= i == 1980 ? "selected" : "" %>><%= i %></option>
+				            <% } %>
+				        </select>
+				        <select id="birthMonth" name="birthMonth" required>
+				            <% for (int i = 1; i <= 12; i++) { %>
+				                <option value="<%= i %>"><%= i %></option>
+				            <% } %>
+				        </select>
+				        <select id="birthDay" name="birthDay" required>
+				            <% for (int i = 1; i <= 31; i++) { %>
+				                <option value="<%= i %>"><%= i %></option>
+				            <% } %>
+				        </select>
+				    </div>
+				</div>
         
 	            <label for="gender">성별:</label>
 	            <select id="gender" name="gender" required>
@@ -297,9 +262,7 @@
 		                }
 		            %>
 		        </select> 
-	
 	            <input type="submit" value="회원 등록">
-
 	        </form>
 	    </div>
 	
@@ -348,8 +311,8 @@
 			             String pausedDisplay = rs.getBoolean("PAUSED") ? "이용중" : "정지";
 			             String trainerName = rs.getString("TRAINER_NAME");
 			    %>
-			    <tr onclick="openPopup('<%= rs.getString("MEMBER_ID")%>');">
-			        <%-- <td><%= rs.getString("MEMBER_ID") %></td> --%>
+			    <tr>  
+			        <td><%= rs.getString("MEMBER_ID") %></td>
 			        <td><%= rs.getString("NAME") %></td>
 			        <td><%= rs.getDate("BIRTHDATE") %></td>
 			        <td><%= genderDisplay %></td>
@@ -361,15 +324,7 @@
 			        <td><%= trainerName != null ? trainerName : "미정" %></td> <!-- 트레이너 이름 표시 -->
         			<td><%= rs.getDate("EXPIRATION_DATE") %></td>
 			    </tr>
-			    <div id="editPopup" class="popup">
-			    	<div class="popup-content">
-			    		<span class="close" onclick="closePopup()">&times;</span>
-			    		 <h2>회원 수정</h2>
-				        <form id="editForm">
-				            
-				        </form>
-			    	</div>
-			    </div>
+			   
 			    
 			    <%
 			        }
@@ -383,12 +338,5 @@
 </body>
 </html>
 <script>
-	function openPopup(memberId) {
-	    document.getElementById("editPopup").style.display = "block";
-	}
-	
-	function closePopup() {
-	    document.getElementById("editPopup").style.display = "none";
-	}
 
 </script>
