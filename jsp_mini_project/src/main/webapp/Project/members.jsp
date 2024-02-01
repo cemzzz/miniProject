@@ -45,8 +45,8 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-
         input[type="text"],
+        
         select {
             width: 100%;
             padding: 8px;
@@ -79,6 +79,18 @@
 		}
 
         input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #5C6BC0;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        input[type="button"] {
+        	margin-top : 10px;
             width: 100%;
             padding: 10px;
             background-color: #5C6BC0;
@@ -129,10 +141,74 @@
                 width: 100%;
             }
         }
+        
+        .search-container {
+	        display: flex;
+	        align-items: center;
+	        width : 500px
+	    }
+	
+	    .search-input {
+	        width: 100%;
+	        padding: 8px; 
+	        margin-right: 5px; 
+	    }
+	
+	    .search-button {
+	        width: 80px; 
+	        padding: 8px; 
+	        background-color: #4CAF50; 
+	        color: white; 
+	        border: none; 
+	        border-radius: 4px; 
+	        cursor: pointer; 
+	    }
+	
+	    .search-button:hover {
+	        background-color: #45a049;
+	    }
+	    
+	    /* 팝업 스타일  */
+	    .popup {
+	        display: none;
+	        position: fixed;
+	        z-index: 1;
+	        left: 0;
+	        top: 0;
+	        width: 100%;
+	        height: 100%;
+	        overflow: auto;
+	        background-color: rgb(0,0,0);
+	        background-color: rgba(0,0,0,0.4);
+	        padding-top: 60px;
+	    }
+	
+	    .popup-content {
+	        background-color: #fefefe;
+	        margin: 5% auto;
+	        padding: 20px;
+	        border: 1px solid #888;
+	        width: 40%;
+	    }
+	
+	    .close {
+	        color: #aaa;
+	        float: right;
+	        font-size: 28px;
+	        font-weight: bold;
+	    }
+	
+	    .close:hover,
+	    .close:focus {
+	        color: black;
+	        text-decoration: none;
+	        cursor: pointer;
+	    }
     </style>
 </head>
 <body>
 	<%@ include file="dbconn.jsp" %>
+
 
 	<div class="container">
 	    <div class="form-container">
@@ -223,17 +299,19 @@
 		        </select> 
 	
 	            <input type="submit" value="회원 등록">
+
 	        </form>
 	    </div>
 	
 	    <div class="list-container">
 	        <h2>회원 리스트</h2>
 	        
-	    	<form action="members.jsp" method="get">
-			    <input type="text" name="searchName" placeholder="이름 검색">
-			    <input type="submit" value="검색">
+	    	<form action="members.jsp" method="GET">
+			    <div class="search-container">
+			        <input type="text" name="searchName" placeholder="이름으로 검색" class="search-input">
+			        <button type="submit" class="search-button">검색</button>
+			    </div>
 			</form>
-			
 			
 	    
 			<table border="1">
@@ -251,11 +329,18 @@
 				    <th>회원권 만료일</th>
 			    </tr>
 			    <%
-			    String sql = "SELECT m.MEMBER_ID, m.NAME, m.BIRTHDATE, m.GENDER, m.PHONE, m.PURCHASE_DATE, m.REMAINING_PLAN, m.REMAINING_PT, m.PAUSED, t.NAME AS TRAINER_NAME, m.EXPIRATION_DATE FROM MEMBERS m LEFT JOIN TRAINERS t ON m.TRAINER_ID = t.TRAINER_ID";
-			    
-			    
-			    
-			    ResultSet rs = stmt.executeQuery(sql);
+				    String searchName = request.getParameter("searchName");
+				    String sql;
+	
+				    if(searchName != null && !searchName.isEmpty()) {
+				        // 검색 로직
+				        sql = "SELECT m.MEMBER_ID, m.NAME, m.BIRTHDATE, m.GENDER, m.PHONE, m.PURCHASE_DATE, m.REMAINING_PLAN, m.REMAINING_PT, m.PAUSED, t.NAME AS TRAINER_NAME, m.EXPIRATION_DATE FROM MEMBERS m LEFT JOIN TRAINERS t ON m.TRAINER_ID = t.TRAINER_ID WHERE m.NAME LIKE '%" + searchName + "%'";
+				    } else {
+				        // 기존 회원 리스트 표시 로직
+				        sql = "SELECT m.MEMBER_ID, m.NAME, m.BIRTHDATE, m.GENDER, m.PHONE, m.PURCHASE_DATE, m.REMAINING_PLAN, m.REMAINING_PT, m.PAUSED, t.NAME AS TRAINER_NAME, m.EXPIRATION_DATE FROM MEMBERS m LEFT JOIN TRAINERS t ON m.TRAINER_ID = t.TRAINER_ID";
+				    }
+				    
+				    ResultSet rs = stmt.executeQuery(sql);
 			
 			        while (rs.next()) {
 			        	 String gender = rs.getString("GENDER");
@@ -263,8 +348,8 @@
 			             String pausedDisplay = rs.getBoolean("PAUSED") ? "이용중" : "정지";
 			             String trainerName = rs.getString("TRAINER_NAME");
 			    %>
-			    <tr>
-			        <td><%= rs.getString("MEMBER_ID") %></td>
+			    <tr onclick="openPopup('<%= rs.getString("MEMBER_ID")%>');">
+			        <%-- <td><%= rs.getString("MEMBER_ID") %></td> --%>
 			        <td><%= rs.getString("NAME") %></td>
 			        <td><%= rs.getDate("BIRTHDATE") %></td>
 			        <td><%= genderDisplay %></td>
@@ -276,6 +361,16 @@
 			        <td><%= trainerName != null ? trainerName : "미정" %></td> <!-- 트레이너 이름 표시 -->
         			<td><%= rs.getDate("EXPIRATION_DATE") %></td>
 			    </tr>
+			    <div id="editPopup" class="popup">
+			    	<div class="popup-content">
+			    		<span class="close" onclick="closePopup()">&times;</span>
+			    		 <h2>회원 수정</h2>
+				        <form id="editForm">
+				            
+				        </form>
+			    	</div>
+			    </div>
+			    
 			    <%
 			        }
 			        rs.close();
@@ -287,3 +382,13 @@
 
 </body>
 </html>
+<script>
+	function openPopup(memberId) {
+	    document.getElementById("editPopup").style.display = "block";
+	}
+	
+	function closePopup() {
+	    document.getElementById("editPopup").style.display = "none";
+	}
+
+</script>
