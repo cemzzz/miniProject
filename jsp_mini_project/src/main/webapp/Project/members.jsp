@@ -279,7 +279,7 @@
 	    
 			<table border="1">
 			    <tr>
-			    	<th>번호</th>
+			    	<!-- <th>번호</th> -->
 				   	<th>회원 이름</th>
 				    <th>생년월일</th>
 				    <th>성별</th>
@@ -310,15 +310,20 @@
 			             String genderDisplay = "M".equals(gender) ? "남성" : "여성";
 			             String pausedDisplay = rs.getBoolean("PAUSED") ? "이용중" : "정지";
 			             String trainerName = rs.getString("TRAINER_NAME");
+			             
+			             Date expirationDate = rs.getDate("EXPIRATION_DATE");
+			             long millis = System.currentTimeMillis();
+			             Date today = new Date(millis);
+			             long remainingDays = (expirationDate.getTime() - today.getTime()) / (24 * 60 * 60 * 1000); 
 			    %>
 			    <tr>  
-			        <td><%= rs.getString("MEMBER_ID") %></td>
+			        <%-- <td><%= rs.getString("MEMBER_ID") %></td> --%>
 			        <td><%= rs.getString("NAME") %></td>
 			        <td><%= rs.getDate("BIRTHDATE") %></td>
 			        <td><%= genderDisplay %></td>
 			        <td><%= rs.getString("PHONE") %></td>
 			        <td><%= rs.getDate("PURCHASE_DATE") %></td>
-			        <td><%= rs.getInt("REMAINING_PLAN") %>일</td>
+			        <td><%= remainingDays %>일</td>
 			        <td><%= rs.getInt("REMAINING_PT") %>회</td>
 			        <td><%= pausedDisplay %></td>
 			        <td><%= trainerName != null ? trainerName : "미정" %></td> <!-- 트레이너 이름 표시 -->
