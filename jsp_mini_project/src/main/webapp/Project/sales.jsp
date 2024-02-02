@@ -5,76 +5,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript 추가 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 <style>
-    .main-container {
-        display: flex;
-        min-height: 100vh;
-    }
+ 
+       
 
-    .sidebar {
-        width: 200px;
-        background-color: #f0f0f0;
-        padding: 20px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .menu li a {
-        display: block;
-        padding: 10px;
-        color: #333;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-    }
-
-    .menu li a:hover {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    .content {
-        flex-grow: 1;
-        padding: 20px;
-        background-color: #fff;
-    }
-
-    #salesData {
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
 </style>
 
 </head>
 <body>
 	<%@ include file="dbconn.jsp"%>
 	
-	<div class="main-container">
-    <aside class="sidebar">
-        <nav class="menu">
-            <ul>
-                <li><a href="#" onclick="showSales('daily')">일별 매출</a></li>
-                <li><a href="#" onclick="showSales('monthly')">월별 매출</a></li>
-                <li><a href="#" onclick="showSales('annual')">연간 매출</a></li>
-                <!-- 기타 매출 현황 선택 기능 -->
+	<div class="container-fluid">
+    <div class="row">
+        <!-- 좌측 컨테이너 -->
+        <div class="col-md-3 bg-light">
+            <h2 class="mt-3">매출 종류 리스트</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#">일별 매출</a></li>
+                <li class="list-group-item"><a href="#">월별 매출</a></li>
+                <li class="list-group-item"><a href="#">분기별 매출</a></li>
             </ul>
-        </nav>
-    </aside>
-
-    <section class="content">
-        <div id="salesData">
-            <!-- 매출 데이터를 동적으로 표시할 영역 -->
         </div>
-    </section>
-	</div>
 
+        <!-- 중앙 컨테이너 -->
+        <div class="col-md-9">
+            <div class="mt-3">
+                <h1 class="display-4">매출 현황</h1>
+            </div>
+            <div class="sales-data">
+                <!-- 매출 현황 데이터를 여기에 표시할 것입니다. -->
+            </div>
+        </div>
+    </div>
+</div>
+	
+	
 </body>
 </html>

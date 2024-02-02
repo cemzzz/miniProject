@@ -58,10 +58,41 @@
         margin-bottom: 20px; 
         padding: 10px; 
    }
-   #trainerActions {
-    	height: 50%; /* 중앙 컨테이너 높이의 50%를 차지 */
-        padding: 10px; /* 내부 여백 설정 */
-   }
+ 
+   
+    /* 담당 회원 목록 스타일 */
+    #trainerActions {
+        /* 배경, 여백, 테두리 스타일 */
+        background-color: #f9f9f9;
+        border-top: 2px solid #dedede;
+        padding: 15px;
+    }
+    #trainerActions h2 {
+        /* 제목 스타일 */
+        color: #333;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+    #trainerActions ul {
+        /* 목록 스타일 */
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    #trainerActions ul li {
+        /* 목록 항목 스타일 */
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: background-color 0.3s;
+    }
+    #trainerActions ul li:hover {
+        /* 목록 항목 호버 스타일 */
+        background-color: #e9e9e9;
+    }
      
 	   
 	
@@ -93,7 +124,7 @@
 	</div>
 	
 	<div id="mainContainer">
-	  <div id="trainerDetail">
+		<div id="trainerDetail">
 	  	<% 
             String selected = request.getParameter("trainerId");
             if (selected != null && !selected.isEmpty()) {
@@ -116,21 +147,38 @@
                 stmt.close();
             }
         %>
-	  </div>
-	  <div id="trainerActions">
-	    <!-- 트레이너에게 할당된 PT 세션과 운동일지 관리 인터페이스 -->
-	  </div>
+	    </div>
+	    
+	    <div id="trainerActions">
+	        <% 
+		        if (selected != null && !selected.isEmpty()) {
+		            stmt = conn.createStatement();
+		            sql = "SELECT MEMBER_ID, NAME, PHONE FROM MEMBERS WHERE TRAINER_ID = " + selected;
+		            rs = stmt.executeQuery(sql);
+		    %>
+		    <h2>담당 회원 목록</h2>
+		    <ul>
+	        <%
+	            while (rs.next()) {
+	                int memberId = rs.getInt("MEMBER_ID");
+	                String memberName = rs.getString("NAME");
+	                String phone = rs.getString("PHONE");
+	        %>
+	                <li><%= memberId %>: <%= memberName %> (<%= phone %>)</li>
+	        <%
+	            }
+	            rs.close();
+	            stmt.close();
+	        }
+	        %>
+    		</ul>
+	    </div>
 	</div>
-	
-        
-
-
     
 </body>
 </html>
 
 <script>
-	
-       
+     
 
 </script>
