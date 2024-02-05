@@ -149,6 +149,7 @@
         <h1>멀티플렉스짐</h1>
         <label id="registerNumberLabel">회원등록번호 4자리 입력해주세요</label>
         <br>
+        
         <input type="text" maxlength="4" placeholder="4자리 입력" id="registerNumberInput">
         <div class="number-buttons">
             <!-- 수정된 숫자 버튼, 백스페이스 버튼, 관리자 버튼, 그리고 입장 버튼 배치 -->
@@ -211,12 +212,13 @@
         
 
         function enter() {
-            var registerNumberInput = document.getElementById('registerNumberInput');
-            if (registerNumberInput.value.length === 4) {
-                alert('입장 로직을 추가하세요.');
-            } else {
-                alert('4자리를 입력해주세요.');
-            }
+        	 var registerNumberInput = document.getElementById('registerNumberInput');
+        	 var enteredNumber = registerNumberInput.value;
+        	 if (enteredNumber.length === 4) {
+				window.location.href = 'member_login.jsp?enteredNumber=' + enteredNumber;
+        	} else {
+        		alert('4자리를 입력해주세요.');
+        	}
         }
     </script>
 

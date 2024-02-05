@@ -134,7 +134,7 @@
     <div class="menu-container">
         <div class="menu-item" onclick="showMenu('members')">회원</div>
         <div class="menu-item" onclick="showMenu('trainers')">트레이너</div>
-        <div class="menu-item" onclick="showMenu('reservation')">PT 예약 현황</div>
+        <div class="menu-item" onclick="showMenu('attendance')">회원 출석 현황</div>
         <div class="menu-item" onclick="showMenu('sales')">매출</div>
         
         <% if(adminId != null) { %>
@@ -161,7 +161,7 @@
     	// 모든 메뉴 숨기기
         document.getElementById('members').style.display = 'none';
         document.getElementById('trainers').style.display = 'none';
-        document.getElementById('reservation').style.display = 'none';
+        document.getElementById('attendance').style.display = 'none';
         document.getElementById('sales').style.display = 'none';
 
         // 클릭한 메뉴만 보이도록 설정
@@ -175,16 +175,16 @@
 
         switch (menu) {
         	case 'members':
-            	pagePath = 'members.jsp'; // 예시: 회원 페이지 경로
+            	pagePath = 'members.jsp'; 
             	break;
             case 'trainers':
-                pagePath = 'trainers.jsp'; // 예시: 트레이너 페이지 경로
+                pagePath = 'trainers.jsp'; 
                 break;
-            case 'reservation':
-                pagePath = 'reservation.jsp'; // 예시: PT 예약 페이지 경로
+            case 'attendance':
+                pagePath = 'attendance.jsp'; 
                 break;
             case 'sales':
-                pagePath = 'sales.jsp'; // 예시: 매출 페이지 경로
+                pagePath = 'sales.jsp'; 
                 break;
             default:
                 // 기본적으로 보일 페이지 설정
@@ -199,4 +199,3 @@
             mainContainer.appendChild(iframe);
         }
 </script>
-
