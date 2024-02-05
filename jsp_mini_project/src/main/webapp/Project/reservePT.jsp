@@ -28,16 +28,17 @@
 		insertStatement.setTimestamp(2, reservationTimestamp);
 		int rowsInserted = insertStatement.executeUpdate();
 		
-		
-	/* 	String insertQuery = "INSERT INTO RESERVATIONRECORDS (MEMBER_ID, RESERVATION_TIME) VALUES (?, SYSTIMESTAMP)";
-		PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
-		insertStatement.setString(1, memberId);
-		int rowsInserted = insertStatement.executeUpdate(); */
 
 		if (rowsInserted > 0) {
-		    out.println("예약이 성공적으로 추가되었습니다.");
+			out.println("<script>");
+	        out.println("alert('PT 예약이 완료되었습니다.');");
+	        out.println("history.back();"); // 이전 페이지로 이동
+	        out.println("</script>");
 		} else {
-		    out.println("예약 추가 실패");
+			out.println("<script>");
+	        out.println("alert('PT 예약이 실패했습니다 다시 시도해주십시오.');");
+	        out.println("history.back();"); // 이전 페이지로 이동
+	        out.println("</script>");
 		}
 
 		insertStatement.close();

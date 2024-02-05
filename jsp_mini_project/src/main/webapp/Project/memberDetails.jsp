@@ -48,7 +48,6 @@
         
         .birthdate-group {
             display: flex;
-            justify-content: space-between;
         }
         .birthdate-group select {
             flex-basis: 30%; /* 각 드롭다운의 크기 */
@@ -80,6 +79,7 @@
 	    <form id="memberForm" action="updateMember.jsp" method="post">
 			<div>
 		        <label for="name">이름:</label>
+		        <input type="hidden" name="memberId" value="<%= memberId %>">
 		        <input type="text" id="name" name="name" value="<%= rs.getString("NAME") %>" >			
 			</div>
 			
@@ -177,12 +177,13 @@
 		            <% 
 			            Statement trainerStmt = conn.createStatement();
 			            ResultSet trainers = trainerStmt.executeQuery("SELECT TRAINER_ID, NAME FROM TRAINERS");
+			           
 		                while (trainers.next()) {
 		                    String trainerId = trainers.getString("TRAINER_ID");
 		                    String trainerName = trainers.getString("NAME");
 		                    boolean isSelected = trainerId.equals(rs.getString("TRAINER_ID"));
 		            %>
-		            <option value="<%= trainerId %>" <%= isSelected ? "selected" : "" %>><%= trainerName %></option>
+		        		<option value="<%= trainerId %>" <%= isSelected ? "selected" : "" %>><%= trainerName %></option>
 		            <%
 		                }
 		                trainers.close();

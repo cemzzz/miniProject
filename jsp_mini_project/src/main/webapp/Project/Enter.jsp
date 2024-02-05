@@ -163,8 +163,8 @@
             <button class="number-button" onclick="addNumber(8)">8</button>
             <button class="number-button" onclick="addNumber(9)">9</button>
             <button class="admin-button" onclick="openAdminPanel()">관리자</button>
-            <button class="backspace-button" onclick="backspace()">⌫</button>
             <button class="number-button" onclick="addNumber(0)">0</button>
+            <button class="backspace-button" onclick="backspace()">⌫</button>
             <button class="enter-button" onclick="enter()">입장</button>
         </div>
     </div>

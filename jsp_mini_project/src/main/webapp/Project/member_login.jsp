@@ -29,12 +29,22 @@
 	            int rowsAffected = insertStmt.executeUpdate();
 	
 	            if (rowsAffected > 0) {
-	                out.println("<p>출석이 성공적으로 등록되었습니다.</p>");
+	            	out.println("<script>");
+	    	        out.println("alert('출석이 완료되었습니다. 입장해주세요!');");
+	    	        out.println("history.back();"); // 이전 페이지로 이동
+	    	        out.println("</script>");
+	                
 	            } else {
-	                out.println("<p>출석 등록에 실패했습니다.</p>");
+	                out.println("<script>");
+	    	        out.println("alert('출석 실패했습니다 다시 입력해주세요');");
+	    	        out.println("history.back();"); // 이전 페이지로 이동
+	    	        out.println("</script>");
 	            }
 	        } else {
-	            out.println("<p>해당 번호의 회원을 찾을 수 없습니다.</p>");
+	        	out.println("<script>");
+    	        out.println("alert('해당 번호의 회원을 찾을 수 없습니다.');");
+    	        out.println("history.back();"); // 이전 페이지로 이동
+    	        out.println("</script>");
 	        }
 	
 	        memberRs.close();
