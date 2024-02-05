@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="dbconn.jsp"%>
-	<%
-	 
-	%>
+	<%@ include file="dbconn.jsp" %>
 
 </body>
 </html>

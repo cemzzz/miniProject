@@ -306,19 +306,31 @@
 				    ResultSet rs = stmt.executeQuery(sql);
 			
 			        while (rs.next()) {
-			        	 String gender = rs.getString("GENDER");
-			             String genderDisplay = "M".equals(gender) ? "남성" : "여성";
-			             String pausedDisplay = rs.getBoolean("PAUSED") ? "이용중" : "정지";
-			             String trainerName = rs.getString("TRAINER_NAME");
-			             
-			             Date expirationDate = rs.getDate("EXPIRATION_DATE");
-			             long millis = System.currentTimeMillis();
-			             Date today = new Date(millis);
-			             long remainingDays = (expirationDate.getTime() - today.getTime()) / (24 * 60 * 60 * 1000); 
+			        	 String memberId = rs.getString("MEMBER_ID");
+	                     String memberName = rs.getString("NAME");
+	                     String gender = rs.getString("GENDER").trim();
+	                     String genderDisplay = "M".equals(gender) ? "남성" : "여성";
+	                     boolean isPaused = rs.getInt("PAUSED") == 0;
+	                     String pausedDisplay = isPaused ? "정지" : "이용중";
+	                     String trainerName = rs.getString("TRAINER_NAME") != null ? rs.getString("TRAINER_NAME") : "미정";
+
+	                     Date purchaseDate = rs.getDate("PURCHASE_DATE");
+	                     int remainingPlan = rs.getInt("REMAINING_PLAN");
+	                     long remainingDays = remainingPlan; // 남은 기간 초기화
+	                        
+	                     // 회원권 상태가 중지가 아닐 때만 남은 기간 계산
+	                     if (!isPaused) {
+	                         long millis = System.currentTimeMillis();
+	                         long elapsedDays = (millis - purchaseDate.getTime()) / (24 * 60 * 60 * 1000);
+	                         remainingDays = Math.max(0, remainingPlan - elapsedDays);	
+			        	 
+				    	}
 			    %>
-			    <tr>  
-			        <%-- <td><%= rs.getString("MEMBER_ID") %></td> --%>
-			        <td><%= rs.getString("NAME") %></td>
+			    <tr> 
+			    	<%-- <td onclick="showMemberDetails('<%= memberId %>')"><%= memberId %></td> --%>
+        			<td onclick="showMemberDetails('<%= memberId %>')"><%= memberName %></td> 
+			       <%--  <td><%= rs.getString("MEMBER_ID") %></td>
+			        <td><%= rs.getString("NAME") %></td> --%>
 			        <td><%= rs.getDate("BIRTHDATE") %></td>
 			        <td><%= genderDisplay %></td>
 			        <td><%= rs.getString("PHONE") %></td>
@@ -343,5 +355,9 @@
 </body>
 </html>
 <script>
+	function showMemberDetails(memberId) {
+	    var url = "memberDetails.jsp?memberId=" + memberId;
+	    window.open(url, "Member Details", "width=600,height=800");
+	}
 
 </script>

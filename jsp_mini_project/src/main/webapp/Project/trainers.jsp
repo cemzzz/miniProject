@@ -43,91 +43,134 @@
             list-style-type: none;
         }
 
-        #mainContainer {
-            width: 80%;
-            background-color: white;
-            padding: 20px;
-            overflow-y: auto;
-        }
+        #trainerDetails, #trainerList {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        padding: 20px;
+	    }
+	
+	    #trainerDetails h2, #trainerList h2 {
+	        font-size: 1.4em;
+	        color: #333;
+	        margin-bottom: 15px;
+	    }
+	
+	    #trainerDetails p, #trainerList li {
+	        font-size: 1em;
+	        color: #666;
+	    }
+	
+	    #trainerList ul {
+	        list-style: none;
+	        padding: 0;
+	    }
+	
+	    #trainerList li {
+	        padding: 5px 0;
+	        border-bottom: 1px solid #eee;
+	    }
+	
+	    #trainerList li a {
+	        text-decoration: none;
+	        color: #007bff;
+	        transition: color 0.3s ease;
+	    }
+	
+	    #trainerList li a:hover {
+	        color: #0056b3;
+	    }
+	    
+	    #mainContainer {
+		    display: flex;
+		    width: 100%;
+		    justify-content: space-between; /* 좌우 컨테이너 간격을 균등하게 분배 */
+		}
+		
+		#ptList, #trainerActions {
+		    width: 48%; /* 각 컨테이너의 너비를 약 50%로 설정 */
+		    padding: 10px;
+		    box-sizing: border-box; /* 패딩을 포함한 너비 계산 */
+		}
 
-        #trainerDetail {
-            background-color: #fff;
-            padding: 20px;
-            border-bottom: 2px solid #eee;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #e9e9e9;
-        }
-
-        h1, h2, p {
-            margin: 0;
-            padding-bottom: 10px;
-            color: #333;
-        }
-
-        h1 {
-            font-size: 2em;
-        }
-
-        h2 {
-            font-size: 1.5em;
-        }
-
-        p {
-            font-size: 1em;
-            color: #666;
-        }
-
-        .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid #ddd;
-            background-color: white;
-            padding: 20px;
-            z-index: 1000;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            font-size: 20px;
-            color: #555;
-            background: none;
-            border: none;
-        }
+         table {
+	        width: 100%;
+	        border-collapse: collapse;
+	        margin-bottom: 20px;
+	    }
+	
+	    th, td {
+	        border: 1px solid #ddd;
+	        text-align: left;
+	        padding: 8px;
+	    }
+	
+	    th {
+	        background-color: #4CAF50;
+	        color: white;
+	    }
+	
+	    tr:nth-child(even) {
+	        background-color: #f9f9f9;
+	    }
+	
+	    tr:hover {
+	        background-color: #e9e9e9;
+	    }
+	
+	    h2 {
+	        color: #333;
+	        font-size: 1.5em;
+	        margin-bottom: 10px;
+	    }
+	
+	    button, input[type="date"], select {
+	        border: 1px solid #ddd;
+	        padding: 8px;
+	        border-radius: 4px;
+	        margin: 5px 0;
+	        transition: all 0.3s ease;
+	    }
+	
+	    button:hover, input[type="date"]:hover, select:hover {
+	        border-color: #7ba4db;
+	    }
+	
+	    /* 팝업창 스타일 */
+	    .popup {
+	        display: none;
+	        position: fixed;
+	        left: 50%;
+	        top: 50%;
+	        transform: translate(-50%, -50%);
+	        border: 1px solid #ddd;
+	        background-color: white;
+	        padding: 20px;
+	        z-index: 1000;
+	    }
+	
+	    .overlay {
+	        display: none;
+	        position: fixed;
+	        left: 0;
+	        top: 0;
+	        width: 100%;
+	        height: 100%;
+	        background-color: rgba(0, 0, 0, 0.5);
+	        z-index: 999;
+	    }
+	
+	    .close-button {
+	        position: absolute;
+	        top: 10px;
+	        right: 10px;
+	        cursor: pointer;
+	        font-size: 20px;
+	        color: #555;
+	        background: none;
+	        border: none;
+	    }
 
         button, input[type="date"], select {
             border: 1px solid #ddd;
@@ -194,46 +237,6 @@
 	
 	
 	<div id="mainContainer">
-		<%
-		String selectedMemberId = request.getParameter("memberId"); // 새로 추가된 회원 ID 파라미터
-	    if (selected != null && !selected.isEmpty()) {
-	        // 트레이너별 회원 목록 조회
-	        stmt = conn.createStatement();
-	        sql = "SELECT MEMBER_ID, NAME, PHONE, GENDER, EXPIRATION_DATE, REMAINING_PT FROM MEMBERS WHERE TRAINER_ID = " + selected;
-	        rs = stmt.executeQuery(sql);
-	        // ... 기존 코드: 회원 목록 표시 ...
-
-	        // 선택된 회원의 PT 예약 내역 조회
-	        if (selectedMemberId != null && !selectedMemberId.isEmpty()) {
-	            Statement stmtReservations = conn.createStatement();
-	            String sqlReservations = "SELECT RECORD_ID, RESERVATION_TIME FROM RESERVATIONRECORDS WHERE MEMBER_ID = '" + selectedMemberId + "'";
-	            ResultSet rsReservations = stmtReservations.executeQuery(sqlReservations);
-	            %>
-	            <h3>PT 예약 내역</h3>
-	            <ul>
-	            <% 
-	            while (rsReservations.next()) {
-	                Timestamp reservationTime = rsReservations.getTimestamp("RESERVATION_TIME");
-	                int recordId = rsReservations.getInt("RECORD_ID"); // 가정: 예약 ID를 가져옴 */
-	                String formattedTime = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(reservationTime);
-	            %>
-	                <li>
-	                	<%= formattedTime %> 
-	                	<input type="button" value="예약 취소" onclick="cancelReservation('<%= recordId %>')">
-	                </li>
-	               
-	            <%
-	            }
-	            rsReservations.close();
-	            stmtReservations.close();
-	            %>
-	            </ul>
-	            <%
-	        }
-	        rs.close();
-	        stmt.close();
-	    }
-		%>
 
 	    <div id="trainerActions">
 	        <% 
@@ -292,6 +295,52 @@
 	        }
 	        %>
 	        
+		<div id="ptList">
+			<%
+				String selectedMemberId = request.getParameter("memberId"); // 새로 추가된 회원 ID 파라미터
+			    if (selected != null && !selected.isEmpty()) {
+			        // 트레이너별 회원 목록 조회
+			        stmt = conn.createStatement();
+			        sql = "SELECT MEMBER_ID, NAME, PHONE, GENDER, EXPIRATION_DATE, REMAINING_PT FROM MEMBERS WHERE TRAINER_ID = " + selected;
+			        rs = stmt.executeQuery(sql);
+	
+			        // 선택된 회원의 PT 예약 내역 조회
+			        if (selectedMemberId != null && !selectedMemberId.isEmpty()) {
+			            Statement stmtReservations = conn.createStatement();
+			            String sqlReservations = "SELECT RECORD_ID, RESERVATION_TIME FROM RESERVATIONRECORDS WHERE MEMBER_ID = '" + selectedMemberId + "'";
+			            ResultSet rsReservations = stmtReservations.executeQuery(sqlReservations);
+	
+			            boolean hasReservations = false;
+			            %>
+			            <h3>PT 예약 내역</h3>
+			            <ul>
+			            <% 
+			            while (rsReservations.next()) {
+			                hasReservations = true;
+			                Timestamp reservationTime = rsReservations.getTimestamp("RESERVATION_TIME");
+			                int recordId = rsReservations.getInt("RECORD_ID");
+			                String formattedTime = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(reservationTime);
+			            %>
+			                <li>
+			                    <%= formattedTime %> 
+			                    <input type="button" value="예약 취소" onclick="cancelReservation('<%= recordId %>')">
+			                </li>
+			            <%
+			            }
+			            if (!hasReservations) {
+			                out.println("<li>예약된 PT가 없습니다</li>");
+			            }
+			            rsReservations.close();
+			            stmtReservations.close();
+			            %>
+			            </ul>
+			            <%
+			        }
+			        rs.close();
+			        stmt.close();
+			    }
+			%>
+		</div>
 	        <div id="popupOverlay" class="overlay" onclick="closePopup()"></div>
 			<div id="popup" class="popup">
 			    <form id="reservationForm" method="post" action="reservePT.jsp">

@@ -68,7 +68,7 @@
             <!-- 매출 종류 리스트 -->
 	        <a href="sales.jsp?sales_type=daily" class="active">일일 매출</a>
 	        <a href="sales.jsp?sales_type=monthly" class="active">월별 매출</a>
-	        <a href="sales.jsp?type=quarterly">분기별 매출</a>
+	        <!-- <a href="sales.jsp?type=quarterly">분기별 매출</a> -->
 	        <a href="sales.jsp?sales_type=total" class="active">총 매출</a>     
         </div>
         <div class="main-content">
