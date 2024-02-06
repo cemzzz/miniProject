@@ -180,7 +180,7 @@
 	        <h2>회원 등록</h2>
 	        <form action="members_save.jsp" method="post">
 	            <label for="name">이름:</label>
-	            <input type="text" id="name" name="name" required><br>
+	            <input type="text" id="name" name="name" required>
 	
 	            <div class="birthdate-section">
 			    <label>생년월일:</label>
@@ -210,7 +210,7 @@
 	            </select><br>
 	
 	            <label for="phone">연락처:</label>
-	            <input type="text" id="phone" name="phone" required><br>
+	            <input type="text" id="phone" name="phone" required>
 	
 	            <!-- 회원권 구매 옵션 -->
 		        <label for="membershipPlan">회원권 구매:</label>

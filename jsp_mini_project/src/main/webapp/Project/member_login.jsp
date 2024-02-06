@@ -57,3 +57,9 @@
 
 </body>
 </html>
+<script>
+	function selectMember(memberId) {
+	    // 선택된 회원으로 로그인 처리를 위해 memberId를 서버에 전송
+	    window.location.href = '?memberId=' + memberId + '&login=true';
+	}
+</script>

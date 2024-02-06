@@ -53,7 +53,7 @@
 	        <thead>
 	            <tr>
 	                <th>회원 이름</th>
-	                <th>출석 시간</th>
+	                <th>성별 <th>
 	            </tr>
 	        </thead>
 	        <tbody>
